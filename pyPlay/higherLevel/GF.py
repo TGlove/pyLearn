@@ -35,10 +35,49 @@ print L2[2].name
 # 还可接受任意关键字参数，并把他们都作为属性赋值给实例。
 
 class Person(object):
-    def __init__(self,name,gender,birth,x):
+    def __init__(self,name,gender,birth,**kw):
+        self.name = name
+        self.gender = gender
+        self.birth = birth
+        for k, v in kw.iteritems():
+            setattr(self, k, v)
 
 
-        xiaoming = Person('Xiao Ming', 'Male', '1990-1-1', job='Student')
+xiaoming = Person('Xiao Ming', 'Male', '1990-1-1', job='Student')
 
-        print xiaoming.name
-        print xiaoming.job
+print xiaoming.name
+print xiaoming.job
+
+# 给Person类的__init__方法中添加name和score参数，并把score绑定到__score属性上，看看外部是否能访问到。
+class Person(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.__score = score
+
+p = Person('Bob', 59)
+
+print p.name
+try:
+
+    print p.__score
+
+except:
+
+    print 'attributeerror'
+
+# 请给 Person 类添加一个类属性 count，每创建一个实例，count 属性就加 1，
+# 这样就可以统计出一共创建了多少个 Person 的实例。
+class Person:
+    count = 0
+    def __init__(self, name):
+        Person.count = Person.count + 1
+        self.name = name
+p1 = Person('Bob')
+print Person.count
+
+p2 = Person('Alice')
+print Person.count
+
+p3 = Person('Tim')
+print Person.count
+
