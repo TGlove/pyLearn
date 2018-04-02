@@ -81,3 +81,69 @@ print Person.count
 p3 = Person('Tim')
 print Person.count
 
+#------   __count = 0 为私有属性
+class Person(object):
+    __count = 0
+    def __init__(self, name):
+        Person.__count = Person.__count + 1
+        self.name = name
+        print Person.__count
+
+p1 = Person('Bob')
+p2 = Person('Alice')
+
+try:
+
+    print Person.__count
+
+except:
+
+    print 'AttributeError'
+
+print '\n\n'
+
+# 请给 Person 类增加一个私有属性 __score，表示分数，再增加一个实例方法 get_grade()，
+# 能根据 __score 的值分别返回 A-优秀, B-及格, C-不及格三档。
+class Person(object):
+
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+    def get_grade(self):
+        if self.score > 80:
+            return 'A-优秀'
+        elif self.score > 60 and self.score <= 79:
+            return 'B-及格'
+        elif self.score < 59:
+            return 'C-不及格'
+
+p1 = Person('Bob', 90)
+p2 = Person('Alice', 65)
+p3 = Person('Tim', 48)
+
+print p1.get_grade()
+print p2.get_grade()
+print p3.get_grade()
+
+print '\n\n'
+
+import types
+def fn_get_grade(self):
+    if self.score >= 80:
+        return 'A'
+    if self.score >= 60:
+        return 'B'
+    return 'C'
+
+class Person(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+p1 = Person('Bob', 90)
+p1.get_grade = types.MethodType(fn_get_grade, p1, Person)
+print p1.get_grade()
+# => A
+p2 = Person('Alice', 65)
+print p2.get_grade()
