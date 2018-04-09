@@ -162,7 +162,8 @@ p1 = Person('Bob', 90)
 p1.get_grade = types.MethodType(fn_get_grade, p1, Person)
 print p1.get_grade()
 # => A
-p2 = Person('Alice', 65)
-print p2.get_grade()
+# p2 = Person('Alice', 65)
+# print p2.get_grade()
 
 print '\n\n'
+
